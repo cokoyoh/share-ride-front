@@ -1,6 +1,6 @@
 <template>
     <div class="register" id="register">
-        <top></top>
+        <top :text="sign_up"></top>
         <div class="container">
             <div class="row">
                <div class="col-lg-3 col-md-3"></div>
@@ -59,7 +59,7 @@
 
 <script>
     import {create_user_url} from "../../global/config";
-    import CredentialsTop from './Credentials.vue'
+    import CredentialsTop from '../pages/ContactTop.vue'
     export default {
         components: {
             'top': CredentialsTop
@@ -71,7 +71,8 @@
                     email: '',
                     password: '',
                     confirm_password: '',
-                }
+                },
+                sign_up: 'Sign Up Here'
             }
         },
         methods: {

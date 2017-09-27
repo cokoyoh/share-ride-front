@@ -1,6 +1,6 @@
 <template>
     <div class="login" id="login">
-        <top></top>
+        <top :text="text"></top>
         <div class="container">
           <div class="row">
               <div class="col-lg-3 col-md-3"></div>
@@ -42,18 +42,19 @@
     import {login_url, get_header, user_url} from "../../global/config";
     import {client_id, client_secret} from "../../global/env";
     import {mapState} from 'vuex'
-    import CredentialsTop from './Credentials.vue'
+    import ContactTop from '../pages/ContactTop.vue'
 
     export default {
         components: {
-            'top': CredentialsTop
+            'top': ContactTop
         },
         data () {
             return {
                 login: {
                     email: '',
                     password: '',
-                }
+                },
+                text: 'Login Here'
             }
         },
         computed: mapState({
@@ -89,7 +90,7 @@
                                         auth_user.name = response.body.name
                                         window.localStorage.setItem('auth_user',JSON.stringify(auth_user))
                                         this.$store.dispatch('setUserObject',auth_user)
-                                        this.$router.push('dashboard')
+                                        this.$router.push('rides')
                                     })
                             }
                         })
