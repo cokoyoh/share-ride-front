@@ -21,7 +21,7 @@
     .contact-top
         height: 70px
         padding: 20px 0 20px
-        margin-bottom: 30px
+        margin-bottom: 5px
         background-image: url("../../images/background/snap-details.png")
         background-position: center
         background-repeat: no-repeat

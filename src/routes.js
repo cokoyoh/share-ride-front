@@ -47,7 +47,7 @@ const router = new VueRouter({
         },
         {
             path: '/rides',
-            component: require('./components/pages/Rides.vue'),
+            component: require('./components/rides/Rides.vue'),
             name:'rides',
             meta: {
                 requiresAuth: false ,
