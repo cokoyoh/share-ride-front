@@ -6,16 +6,10 @@
                     <router-link class="nav-link" to="/">Home<span class="sr-only">(current)</span></router-link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#about" v-if="this.$route.path === '/'">About</a>
-                </li>
-                <li class="nav-item">
                     <router-link class="nav-link" to="/rides">Rides</router-link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#team" v-if="this.$route.path === '/'">Team</a>
-                </li>
-                <li class="nav-item">
-                    <router-link class="nav-link" to="/contact-us">Contact Us</router-link>
+                    <router-link class="nav-link" to="/give-a-ride" v-show="userStore.auth_user !== null">Add Ride</router-link>
                 </li>
                 <form class="form-inline my-2 my-lg-0">
                     <router-link to="/register"> <button class="btn btn-sm btn-outline-success my-2 my-sm-0 live-space" v-if="userStore.auth_user === null">Sign Up</button></router-link>

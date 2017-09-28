@@ -86,8 +86,9 @@
                                 this.$http.get(user_url, {headers: get_header()})
                                     .then(response => {
                                         console.log('user object', response)
-                                        auth_user.email = response.body.email
-                                        auth_user.name = response.body.name
+                                        auth_user.email = response.body.data[0].email
+                                        auth_user.name = response.body.data[0].name
+                                        auth_user.id = response.body.data[0].id
                                         window.localStorage.setItem('auth_user',JSON.stringify(auth_user))
                                         this.$store.dispatch('setUserObject',auth_user)
                                         this.$router.push('rides')

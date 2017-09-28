@@ -1,7 +1,7 @@
 <template>
     <div class="available-rides" id="available-rides">
         <div class="container">
-            <table class="table table-striped table-hover ">
+            <table class="table table-striped table-hover " >
                 <thead>
                 <tr>
                     <th>Origin</th>
@@ -11,26 +11,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr
+                <tr     @click="selectedRide(ride)"
                         v-for="ride in ridesStore.available_rides">
                     <td>{{ride.origin}}</td>
                     <td>{{ride.destination}}</td>
                     <td>{{ride.capacity}}</td>
                     <td>
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox"
-                                       @click="selectedRide(ride)"
-                                       data-toggle="tooltip"
-                                       title="Click here to book"
-                                       v-show="userStore.auth_user !== null">
-                                <input type="checkbox"
-                                       v-show="userStore.auth_user === null"
-                                       disabled
-                                       data-toggle="tooltip"
-                                       title="Login to book!">
-                            </label>
-                        </div>
+                        <button class="btn btn-sm btn-outline-success my-2 my-sm-0"
+                                @click="bookRide" type="submit"
+                                v-show="userStore.auth_user !== null">
+                         Click to Book
+                        </button>
+                        <button class="btn btn-sm btn-outline-success my-2 my-sm-0"
+                                type="submit"
+                                data-toggle="tooltip"
+                                title="Login to book!"
+                                disabled
+                                v-show="userStore.auth_user === null">
+                            Click to Book
+                        </button>
                     </td>
                 </tr>
                 </tbody>
@@ -43,28 +42,61 @@
     import {mapState} from 'vuex'
     import userStore from "../pages/users/userStore";
     import {book_ride_url, get_header} from "../../global/config";
+    import ridesStore from "./ridesStore";
+
     export default {
         computed: mapState({
-            ridesStore:state => state.ridesStore,
-            userStore:state => state.userStore
+            ridesStore: state => state.ridesStore,
+            userStore: state => state.userStore
         }),
-        created(){
+        created() {
             this.$store.dispatch('setAvailableRides')
         },
         methods: {
-            selectedRide(ride){
+            selectedRide(ride) {
                 this.$store.dispatch('setSelectedRide', ride)
+            },
+//            confirmBook(){
+//                swal({
+//                    title: 'Book a ride?',
+//                    text: "You are about to book a ride",
+//                    type: 'question',
+//                    showCancelButton: true,
+//                    confirmButtonColor: '#3085d6',
+//                    cancelButtonColor: '#d33',
+//                    confirmButtonText: 'Yes, book ride!'
+//                }).then(function () {
+//                    swal(
+//                        'Success!',
+//                        'Your ride has been booked',
+//                        'success'
+//                    )
+//                })
+//            },
+            bookRide(){
                 let post_data = {
-                    id: ride.id,
+                    id: this.ridesStore.selected_ride.id
                 }
-                console.log(post_data)
-                this.$http.post(book_ride_url, post_data, {headers: get_header()})
-                    .then(response => {
-                        console.log(response)
-                    })
-                    .catch(response => {
-                        console.log(response)
-                    })
+                if(this.userStore.auth_user.id !== this.ridesStore.selected_ride.driver_id){
+                    this.$http.post(book_ride_url, post_data, {headers: get_header()})
+                        .then(response => {
+                            console.log(response)
+                            if(response.status === 200){
+                                swal(
+                                    'Success',
+                                    response.body.message,
+                                    'success'
+                                )
+                            }
+                        })
+                        .catch(response => {
+                            console.log(response)
+                        })
+                } swal(
+                    'Invalid Operation',
+                    'You cannot book your own ride!',
+                    'error'
+                )
             }
         }
     }
@@ -74,13 +106,13 @@
     .available-rides
         padding: 0 0 10px
         margin-top: 10px
-    .available-rides h2
-        color: #222222
-    .available-rides ul>li
-        color: #222222
-        height: 40px
-        text-align: left
-        margin: 10px
-    .available-rides .no-border
-        border-style: none
+        .available-rides h2
+            color: #222222
+        .available-rides ul > li
+            color: #222222
+            height: 40px
+            text-align: left
+            margin: 10px
+        .available-rides .no-border
+            border-style: none
 </style>

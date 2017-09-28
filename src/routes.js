@@ -30,27 +30,19 @@ const router = new VueRouter({
             name:'register',
         },
         {
-            path: '/dashboard',
-            component: require('./components/pages/users/Dashboard.vue'),
-            name:'dashboard',
-            meta: {
-                requiresAuth: true ,
-            }
-        },
-        {
-            path: '/contact-us',
-            component: require('./components/pages/Contact.vue'),
-            name:'contact-us',
-            meta: {
-                requiresAuth: false ,
-            }
-        },
-        {
             path: '/rides',
             component: require('./components/rides/Rides.vue'),
             name:'rides',
             meta: {
                 requiresAuth: false ,
+            }
+        },
+        {
+            path: '/give-a-ride',
+            component: require('./components/rides/GiveRide.vue'),
+            name:'give-ride',
+            meta: {
+                requiresAuth: true ,
             }
         },
     ],
