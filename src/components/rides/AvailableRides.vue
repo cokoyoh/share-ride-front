@@ -1,48 +1,71 @@
 <template>
     <div class="available-rides" id="available-rides">
         <div class="container">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <ul class="list-group">
-                        <li class="no-border list-group-item">
-                            <div class="row">
-                                <div class="col-lg-4 col-md-4">Origin</div>
-                                <div class="col-lg-4 col-md-4">Destination</div>
-                                <div class="col-lg-2 col-md-2">Capacity</div>
-                                <div class="col-lg-2 col-md-2">Book</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <ul class="list-group" v-for="ride in ridesStore.available_rides">
-                <li class="list-group-item">
-                   <div class="row">
-                       <div class="col-lg-4 col-md-4">{{ride.origin}}</div>
-                       <div class="col-lg-4 col-md-4">{{ride.destination}}</div>
-                       <div class="col-lg-2 col-md-2">{{ride.capacity}}</div>
-                       <div class="col-lg-2 col-md-2">
-                           <div class="checkbox">
-                               <label>
-                                   <input type="checkbox">
-                               </label>
-                           </div>
-                       </div>
-                   </div>
-                </li>
-            </ul>
+            <table class="table table-striped table-hover ">
+                <thead>
+                <tr>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Capacity</th>
+                    <th>Book</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr
+                        v-for="ride in ridesStore.available_rides">
+                    <td>{{ride.origin}}</td>
+                    <td>{{ride.destination}}</td>
+                    <td>{{ride.capacity}}</td>
+                    <td>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       @click="selectedRide(ride)"
+                                       data-toggle="tooltip"
+                                       title="Click here to book"
+                                       v-show="userStore.auth_user !== null">
+                                <input type="checkbox"
+                                       v-show="userStore.auth_user === null"
+                                       disabled
+                                       data-toggle="tooltip"
+                                       title="Login to book!">
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>
 
 <script>
     import {mapState} from 'vuex'
+    import userStore from "../pages/users/userStore";
+    import {book_ride_url, get_header} from "../../global/config";
     export default {
         computed: mapState({
-            ridesStore:state => state.ridesStore
+            ridesStore:state => state.ridesStore,
+            userStore:state => state.userStore
         }),
         created(){
             this.$store.dispatch('setAvailableRides')
+        },
+        methods: {
+            selectedRide(ride){
+                this.$store.dispatch('setSelectedRide', ride)
+                let post_data = {
+                    id: ride.id,
+                }
+                console.log(post_data)
+                this.$http.post(book_ride_url, post_data, {headers: get_header()})
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(response => {
+                        console.log(response)
+                    })
+            }
         }
     }
 </script>

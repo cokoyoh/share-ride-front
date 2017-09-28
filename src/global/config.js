@@ -9,6 +9,8 @@ export const get_sharper_details_url = api_domain + 'api/v1/get-sharper-details'
 export const add_project_url = api_domain + 'api/v1/add-project'
 
 export const get_available_rides_url = api_domain + 'api/v1/get-available-rides'
+export const book_ride_url = api_domain + 'api/v1/book-ride'
+export const add_ride_url = api_domain + 'api/v1/add-ride'
 
 export const forgot_password_url = api_domain + 'api/forgot-password'
 export const reset_password_url = api_domain + 'api/reset-password'
