@@ -13,6 +13,10 @@
                 </div>
                 <div class="col-lg-8 col-md-8">
                     <available></available>
+                    <p  class="give-ride alert alert-danger"
+                        v-show="userStore.auth_user === null">
+                        Please login to be able to book a ride
+                    </p>
                 </div>
                 <div class="row">
                     <router-link to="give-a-ride"> <button class="add btn btn-sm btn-outline-success my-2 my-sm-0">Give Someone A Ride</button></router-link>
@@ -23,6 +27,7 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
     import ContactTop from '../pages/ContactTop.vue'
     import AvailableRides from './AvailableRides.vue'
     import BookRides from './GiveRide.vue'
@@ -32,6 +37,9 @@
                 text: 'Available Rides'
             }
         },
+        computed: mapState({
+            userStore:state => state.userStore
+        }),
         components: {
             'top': ContactTop,
             'available': AvailableRides,
@@ -45,14 +53,14 @@
         padding: 0 0 40px
     .rides img
         width: 100%
-        /*height: 300px*/
     .rides .polaroid
         width: 80%
         background-color: white
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
         margin-bottom: 25px
-    /*.rides h4,p*/
-        /*color: #222222*/
     .rides .add
         margin-left: 28px
+    .rides .give-ride
+        color: red
+        margin-left: 20px
 </style>

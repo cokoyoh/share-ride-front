@@ -46,4 +46,5 @@
             border-radius: 50%
     .services h4
         color: #222222
+        text-align: left
 </style>
