@@ -12,11 +12,12 @@
                     </div>
                 </div>
                 <div class="col-lg-8 col-md-8">
+                    <div class="give-ride alert alert-dismissible alert-danger"
+                         v-show="userStore.auth_user === null">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                         Please login to be able to book a ride.
+                    </div>
                     <available></available>
-                    <p  class="give-ride alert alert-danger"
-                        v-show="userStore.auth_user === null">
-                        Please login to be able to book a ride
-                    </p>
                 </div>
                 <div class="row">
                     <router-link to="give-a-ride"> <button class="add btn btn-sm btn-outline-success my-2 my-sm-0">Give Someone A Ride</button></router-link>
@@ -61,6 +62,7 @@
     .rides .add
         margin-left: 28px
     .rides .give-ride
-        color: red
-        margin-left: 20px
+        /*color: red*/
+        margin-left: 15px
+        margin-right: 15px
 </style>
