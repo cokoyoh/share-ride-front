@@ -18,7 +18,7 @@
                     <td>{{ride.capacity}}</td>
                     <td>
                         <button class="btn btn-sm btn-outline-success my-2 my-sm-0"
-                                @click="bookRide" type="submit"
+                                type="submit"
                                 v-show="userStore.auth_user !== null">
                          Click to Book
                         </button>
@@ -55,25 +55,6 @@
         methods: {
             selectedRide(ride) {
                 this.$store.dispatch('setSelectedRide', ride)
-            },
-//            confirmBook(){
-//                swal({
-//                    title: 'Book a ride?',
-//                    text: "You are about to book a ride",
-//                    type: 'question',
-//                    showCancelButton: true,
-//                    confirmButtonColor: '#3085d6',
-//                    cancelButtonColor: '#d33',
-//                    confirmButtonText: 'Yes, book ride!'
-//                }).then(function () {
-//                    swal(
-//                        'Success!',
-//                        'Your ride has been booked',
-//                        'success'
-//                    )
-//                })
-//            },
-            bookRide(){
                 let post_data = {
                     id: this.ridesStore.selected_ride.id
                 }
@@ -90,14 +71,12 @@
                             }
                         })
                         .catch(response => {
-                            console.log(response)
+                            console.log(response, 'driver id = ', this.ridesStore.selected_ride.driver_id)
                         })
-                } swal(
-                    'Invalid Operation',
-                    'You cannot book your own ride!',
-                    'error'
-                )
-            }
+                } else {
+                    swal('Invalid Operation', 'You cannot book your own ride!', 'error')
+                }
+            },
         }
     }
 </script>

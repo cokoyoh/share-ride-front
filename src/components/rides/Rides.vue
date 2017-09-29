@@ -10,6 +10,9 @@
                             <h4>Get Available Rides</h4>
                         </div>
                     </div>
+                    <div class="row">
+                        <router-link to="give-a-ride"> <button class="add btn btn-sm btn-outline-success my-2 my-sm-0">Give Someone A Ride</button></router-link>
+                    </div>
                 </div>
                 <div class="col-lg-8 col-md-8">
                     <div class="give-ride alert alert-dismissible alert-danger"
@@ -18,9 +21,6 @@
                          Please login to be able to book a ride.
                     </div>
                     <available></available>
-                </div>
-                <div class="row">
-                    <router-link to="give-a-ride"> <button class="add btn btn-sm btn-outline-success my-2 my-sm-0">Give Someone A Ride</button></router-link>
                 </div>
             </div>
         </div>
@@ -60,7 +60,7 @@
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
         margin-bottom: 25px
     .rides .add
-        margin-left: 28px
+        margin-left: 18px
     .rides .give-ride
         /*color: red*/
         margin-left: 15px
